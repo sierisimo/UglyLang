@@ -1,13 +1,13 @@
 #name: test
 #author: Sier
 #depends: file1, file2
-#functs: main
+#functs: main, fun1
 #globals:
 
 -main:argc,argv-
 "
   {number x 2}
-  {string v 'perrito'}
+  {string v 'perrito'} $$ Strings only works with sum_s operation
   {number y 3, z 5}
   {number r
     {file1.sum(4, 3)}
@@ -18,10 +18,16 @@
     {substraction()}
     {multiply()}
     {divide()}
-    
    else:
-    {}
-    {}
-    {}
+    {mod(number1,number2)}
   }
+  {while (r < 6):
+    {sum(r,fun1())}
+  }
+"
+
+-fun1-
+"
+  {print('Just Sayin')}
+  {return(5)}
 "
