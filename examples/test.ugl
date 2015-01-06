@@ -1,0 +1,27 @@
+#name: test
+#author: Sier
+#depends: file1, file2
+#functs: main
+#globals:
+
+-main:argc,argv-
+"
+  {number x 2}
+  {string v 'perrito'}
+  {number y 3, z 5}
+  {number r
+    {file1.sum(4, 3)}
+  }
+  {if (x > 4):
+    {r 5}
+    {sum()}
+    {substraction()}
+    {multiply()}
+    {divide()}
+    
+   else:
+    {}
+    {}
+    {}
+  }
+"
