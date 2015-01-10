@@ -40,7 +40,7 @@ program
       debug("Check Syntax");
 
       var filesArr = reader.read([file].concat(uglyFiles));
-    
+      
       syntax.check(filesArr);
     });
 

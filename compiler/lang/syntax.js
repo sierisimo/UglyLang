@@ -17,7 +17,8 @@
 const debug = require('debug')('lang-syntax');
 
 function syntaxCheck(filesArr){
-  var filesNames = filesArr.files,
+  var filesNames = filesArr.files;
+  
   for(var i = filesNames.length, l = i;l--;){
     //Do stuff with the files
   }

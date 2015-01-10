@@ -33,7 +33,7 @@ function read(fi, opts, callback){
 		opts:false,
 		callback:false,
 		files:[],
-		contents:[]
+		contents:{}
 	};
 
 	//TODO: Optimize this section, is ugly and repetitive
@@ -68,7 +68,7 @@ function read(fi, opts, callback){
 	//Read a single file.
 	function readSingle(fileName){
 		readObj.files.push(fileName);
-		readObj.contents.push(fs.readFileSync(fileName,'utf-8'));
+		readObj.contents[fileName] = fs.readFileSync(fileName,'utf-8');
 	}
 
 	//
