@@ -3,7 +3,8 @@
 *
 * Date: 7 - Jan - 2015
 * LastUpdate: 7 - Jan - 2015
-* Version: 0.0.1
+* Version: 0.0.4
+* Status: alpha
 *
 * Name: reader.js
 *
@@ -11,17 +12,20 @@
 *		Set of functions for reading files. It also accepts certain formats and checking
 *
 * Exports:
-*
+*		read(files, )
 */
 
-const fs = require('fs');
+const fs = require('fs')
+	debug = require('debug')('file-read');
 
+debug("File");
 /*
  * function: read
  *
  * params:
- *   fi: 			file(s) to read
- *   opts: 		JSON holding the options for the opening of the files
+ *   fi: 				file(s) to read, could be a string or an array of strings
+ *   opts: 			JSON holding the options for the opening of the files
+ *	 callback: 	a function(err, data) that holds data as an string with the conten if nothing went wrong
  *
  * returns: object holding a string with content based on options
  */

@@ -11,7 +11,7 @@
     "email": "sierisimo@gmail.com"
   },
   "bin": {
-    "ugly-compiler": "./bin/uglyCompiler.js",
+    "ugly-compiler": "./bin/ugly-compiler.js",
     "ugly-machine": "./bin/uglyLauncher.j"
   },
   "repository": {
@@ -19,7 +19,8 @@
     "url": "git@github.com:sierisimo/UglyLang.git"
   },
   "scripts": {
-    "ugly-compile":"node ./bin/uglyCompiler.js",
+    "debug-compiler":"DEBUG=ugly-compiler,file-read node ./bin/ugly-compiler.js",
+    "ugly-compile":"node ./bin/ugly-compiler.js",
     "ugly-launch":"node ./bin/uglyLauncher.js"
   },
   "dependencies": {
