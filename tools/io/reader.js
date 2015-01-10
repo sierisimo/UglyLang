@@ -29,7 +29,7 @@ function read(fi, opts, callback){
 	var readObj = {
 		opts:false,
 		callback:false,
-		files:"",
+		files:[],
 		contents:[]
 	};
 
@@ -44,22 +44,27 @@ function read(fi, opts, callback){
 		if(typeof fi === 'string' && arguments.length === 1){
 			//Open file directly
 			readSingle(fi);
+
+			return readObj;
 		} else if (Array.isArray(fi)){
 			//Open multiple files
-			for(var l = fi.length, i = l; i--;) readSingle(fi[l]);
+			for(var l = fi.length, i = l; i--;) readSingle(fi[i]);
+
+			return readObj;
 		}
 	}else{
-		//Nothing in the API was respected
+		//Nothing in the API was respected so take this undefined
 		return undefined;
 	}
 
-	//
+	//TODO: Pending implementation
 	function validateOpts(){
 
 	}
 
-	//
+	//Read a single file.
 	function readSingle(fileName){
+		readObj.files.push(fileName);
 		readObj.contents.push(fs.readFileSync(fileName,'utf-8'));
 	}
 
@@ -73,3 +78,7 @@ function read(fi, opts, callback){
 		});
 	}
 }
+
+module.exports = {
+	read: read
+};
