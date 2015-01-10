@@ -3,7 +3,7 @@
 *
 * Date: 7 - Jan - 2015
 * LastUpdate: 7 - Jan - 2015
-* Version: 0.0.4
+* Version: 0.0.5
 * Status: alpha
 *
 * Name: reader.js

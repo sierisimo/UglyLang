@@ -3,7 +3,7 @@
 *
 * Date:       7 - Jan - 2015
 * LastUpdate: 8 - Jan - 2015
-* Version:    0.0.3
+* Version:    0.0.4
 * Status:     alpha
 *
 * Name:       uglyCompiler.js
@@ -21,7 +21,7 @@ const debug = require('debug')('ugly-compiler'),
   //Components of the compiler
   syntax = require('../compiler/lang/syntax');
 
-program.version('0.0.3')
+program.version('0.0.4')
   .usage("[option] <file ...>");
 
 program
@@ -40,7 +40,7 @@ program
       debug("Check Syntax");
 
       var filesArr = reader.read([file].concat(uglyFiles));
-      
+
       syntax.check(filesArr);
     });
 
