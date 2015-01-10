@@ -12,13 +12,12 @@
 *		Set of functions for reading files. It also accepts certain formats and checking
 *
 * Exports:
-*		read(files, )
+*		read(files,options,callback)
 */
 
 const fs = require('fs')
 	debug = require('debug')('file-read');
 
-debug("File");
 /*
  * function: read
  *
