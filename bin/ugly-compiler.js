@@ -21,6 +21,8 @@ const debug = require('debug')('ugly-compiler'),
   //Components of the compiler
   syntax = require('../compiler/lang/syntax');
 
+global.compileOpts = {};
+
 program.version('0.0.4')
   .usage("[option] <file ...>");
 
@@ -29,7 +31,6 @@ program
     .option('-c, --compile <file> [sourceFiles...]','Generate the object files')
     .action(function(file, sourceFiles){
       //Call only the compiler (the compiler also calls the syntax) but not create the program
-
       var filesArr = reader.read([file].concat(sourceFiles));
     });
 

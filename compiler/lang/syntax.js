@@ -2,7 +2,7 @@
 * Author: Sinuhe Jaime Valencia <sierisimo@gmail.com>
 *
 * Date:       8 - Jan - 2015
-* LastUpdate: 9 - Jan - 2015
+* LastUpdate: 30 - Jan - 2015
 * Version:    0.0.2
 * Status:     alpha
 *
@@ -11,8 +11,6 @@
 * Description:
 *   The main syntax checker for a file. Basically all the language
 *
-* Exports:
-*   check()
 */
 const debug = require('debug')('lang-syntax');
 

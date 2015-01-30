@@ -19,12 +19,14 @@
     "url": "git@github.com:sierisimo/UglyLang.git"
   },
   "scripts": {
-    "debug-compiler":"DEBUG=ugly-compiler,file-read node ./bin/ugly-compiler.js",
-    "ugly-compile":"node ./bin/ugly-compiler.js",
-    "ugly-launch":"node ./bin/uglyLauncher.js"
+    "debug-compiler": "DEBUG=ugly-compiler,file-read node ./bin/ugly-compiler.js",
+    "ugly-compile": "node ./bin/ugly-compiler.js",
+    "ugly-launch": "node ./bin/uglyLauncher.js"
   },
   "dependencies": {
-    "debug": "2.x.x",
-    "commander":"2.x.x"
+    "commander": "2.x.x"
+  },
+  "devDependencies": {
+    "debug": "^2.1.1"
   }
 }
