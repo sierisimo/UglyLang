@@ -13,6 +13,11 @@
 *
 */
 
+if(process.argv.length < 3){
+  console.error("Error, need at least one argument.\n\n\tCheck: ugly-compiler --help")
+  process.exit(1);
+}
+
 //External modules
 const debug = require('debug')('ugly-compiler'),
   program = require('commander'),
@@ -21,6 +26,7 @@ const debug = require('debug')('ugly-compiler'),
   //Components of the compiler
   syntax = require('../compiler/lang/syntax');
 
+//Avalible options for everyone
 global.compileOpts = {};
 
 program.version('0.0.4')
@@ -31,7 +37,10 @@ program
     .option('-c, --compile <file> [sourceFiles...]','Generate the object files')
     .action(function(file, sourceFiles){
       //Call only the compiler (the compiler also calls the syntax) but not create the program
+      debug("Compile files: "+file+" "+sourceFiles);
+
       var filesArr = reader.read([file].concat(sourceFiles));
+
     });
 
 program
@@ -54,6 +63,7 @@ program.parse(process.argv);
 //TODO: Enable verbose mode
 if(program.verbose){
   //Do stuff about showing message to the user
+  compileOpts.verbose = true;
 }
 
 if(program.output){

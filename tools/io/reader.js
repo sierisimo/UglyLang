@@ -82,6 +82,4 @@ function read(fi, opts, callback){
 	}
 }
 
-module.exports = {
-	read: read
-};
+exports.read = read;
