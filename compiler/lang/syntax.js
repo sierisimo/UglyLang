@@ -21,7 +21,7 @@ var headOptions = {
   depends: false,
   functs: true,
   globals: false
-}, symbols = {};
+}, symbols = require('./symbols');
 
 function syntaxCheck(filesObj){
   var filesNames = filesObj.files,
