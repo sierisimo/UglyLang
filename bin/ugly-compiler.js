@@ -52,11 +52,20 @@ program
 program
   .command('help <command>').description("Shows full command options")
   .action(function(command){
-    //TODO: Text for each command
     switch(command){
       case "compile":
         console.log("Usage:\tugly-compiler compile [options] <file> [files...]\n");
+        console.log("Description:\n\tSend to compile every file passed as argument but doesn't generate final program,");
+        console.log("\tthis is helpfull when you want to use a previous compiled object on another location\n");
         console.log("Options:\n\t-d, --directory <path>\tCompiles and sends only the objects to <path>");
+        break;
+      case "check":
+        console.log("Usage:\tugly-compiler check <file> [files...]\n");
+        console.log("Description:\n\tChecks the syntax of files passed and shows possible errors or warnings");
+        break;
+      case "help":
+        console.log("Usage:\tugly-compiler help <command>\n");
+        console.log("Description:\n\tShows the help for <command>");
         break;
       default:
         program.help();
