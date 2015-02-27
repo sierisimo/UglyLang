@@ -19,7 +19,7 @@
     "url": "git@github.com:sierisimo/UglyLang.git"
   },
   "scripts": {
-    "debug-compiler": "DEBUG=ugly-compiler,file-read node ./bin/ugly-compiler.js",
+    "debug-compiler": "DEBUG=ugly-compiler,file-read,lang-syntax node ./bin/ugly-compiler.js",
     "ugly-compile": "node ./bin/ugly-compiler.js",
     "ugly-launch": "node ./bin/uglyLauncher.js"
   },

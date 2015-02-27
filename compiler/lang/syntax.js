@@ -17,11 +17,13 @@ const debug = require('debug')('lang-syntax');
 //Avalible headers on a Uglyfile.
 var headOptions = require('./head'), symbols = require('./symbols');
 
+//Main function called on require
 function syntaxCheck(filesObj){
   var filesNames = filesObj.files,
     allContent = filesObj.contents,
     fileContent, textLines;
 
+  debug("Check Syntax on:", filesNames);
   //TODO: Optimize this
   for(var i = filesNames.length, l = i;l--;){
     fileContent = allContent[filesNames[l]];
