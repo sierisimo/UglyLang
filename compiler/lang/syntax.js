@@ -21,14 +21,13 @@ var headOptions = {
   depends: false,
   functs: true,
   globals: false
-},
-  symbols = {};
+}, symbols = require('./symbols');
 
 function syntaxCheck(filesObj){
   var filesNames = filesObj.files,
     allContent = filesObj.contents,
     fileContent, textLines;
-    
+
   //TODO: Optimize this
   for(var i = filesNames.length, l = i;l--;){
     fileContent = allContent[filesNames[l]];

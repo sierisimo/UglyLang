@@ -13,11 +13,6 @@
 *
 */
 
-if(process.argv.length < 3){
-  console.error("Error, need at least one argument.\n\n\tCheck: ugly-compiler --help")
-  process.exit(1);
-}
-
 //External modules
 const debug = require('debug')('ugly-compiler'),
   program = require('commander'),
@@ -34,19 +29,19 @@ program.version('0.0.4')
 
 program
   .command('compile <file> [sourceFiles...]').description('Generate the object files')
-    .option('-c, --compile <file> [sourceFiles...]','Generate the object files')
-    .action(function(file, sourceFiles){
-      //Call only the compiler (the compiler also calls the syntax) but not create the program
-      debug("Compile files: "+file+" "+sourceFiles);
+    .option('-d, --directory <directory>','Compile to especific folder') //Flag for sending objects to another output
+    .action(function(file, sourceFiles, options){
+      //options.directory is the new dest
 
-      var filesArr = reader.read([file].concat(sourceFiles));
+      //Call only the compiler (the compiler also calls the syntax) but not create the program
+      //var filesArr = reader.read([file].concat(sourceFiles));
 
     });
 
 program
   .command('check <file> [uglyFiles...]').description('Check if file have errors, but no compile it')
     .action(function(file,uglyFiles){
-      //Call syntax
+      //Call syntax but not compile or link
       debug("Check Syntax");
 
       var filesArr = reader.read([file].concat(uglyFiles));
@@ -55,12 +50,40 @@ program
     });
 
 program
+  .command('help <command>').description("Shows full command options")
+  .action(function(command){
+    switch(command){
+      case "compile":
+        console.log("Usage:\tugly-compiler compile [options] <file> [files...]\n");
+        console.log("Description:\n\tSend to compile every file passed as argument but doesn't generate final program,");
+        console.log("\tthis is helpfull when you want to use a previous compiled object on another location\n");
+        console.log("Options:\n\t-d, --directory <path>\tCompiles and sends only the objects to <path>");
+        break;
+      case "check":
+        console.log("Usage:\tugly-compiler check <file> [files...]\n");
+        console.log("Description:\n\tChecks the syntax of files passed and shows possible errors or warnings");
+        break;
+      case "help":
+        console.log("Usage:\tugly-compiler help <command>\n");
+        console.log("Description:\n\tShows the help for <command>");
+        break;
+      default:
+        program.help();
+        break;
+    }
+  });
+
+program
   .option('-o, --output <name>','Name for the final program')
   .option('-v, --verbose','Enable verbose mode');
 
 program.parse(process.argv);
 
-//TODO: Enable verbose mode
+if(!program.args.length){
+  program.help();
+  process.exit(1);
+}
+
 if(program.verbose){
   //Do stuff about showing message to the user
   compileOpts.verbose = true;
