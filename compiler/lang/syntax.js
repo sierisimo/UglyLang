@@ -15,13 +15,7 @@
 const debug = require('debug')('lang-syntax');
 
 //Avalible headers on a Uglyfile.
-var headOptions = {
-  name: true,
-  author: false,
-  depends: false,
-  functs: true,
-  globals: false
-}, symbols = require('./symbols');
+var headOptions = require('./head'), symbols = require('./symbols');
 
 function syntaxCheck(filesObj){
   var filesNames = filesObj.files,

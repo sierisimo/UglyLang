@@ -1,0 +1,7 @@
+{
+  "name": true,
+  "author": false,
+  "depends": false,
+  "functs": true,
+  "globals": false
+}
