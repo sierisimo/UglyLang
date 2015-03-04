@@ -1,5 +1,5 @@
-#name: test
-#author: Sier
+#name   : test
+#author: Sier the awesome
 #depends: file1, file2
 #functs: main, fun1
 #globals:

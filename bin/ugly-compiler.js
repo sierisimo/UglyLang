@@ -91,4 +91,5 @@ if(program.verbose){
 
 if(program.output){
   //Do something about the final name
+  compileOpts.outFile = program.output;
 }
