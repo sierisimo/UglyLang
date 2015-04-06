@@ -46,7 +46,12 @@ program
 
       var filesArr = reader.read([file].concat(uglyFiles));
 
-      syntax.check(filesArr);
+      try{
+        syntax.check(filesArr);
+      }catch(e){
+        console.log(e);
+      }
+
     });
 
 program

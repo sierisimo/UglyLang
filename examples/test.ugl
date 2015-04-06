@@ -12,6 +12,7 @@
   {number r
     {file1.sum(4, 3)}
   }
+  $$ This is a comment
   {if (x > 4):
     {r 5}
     {sum()}
