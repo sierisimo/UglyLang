@@ -16,7 +16,8 @@ const debugPackage = require('debug'),
   debug = debugPackage('lang-syntax');
 
 //Avalible headers on a Uglyfile.
-var headOptions = require('./spec/head'),
+var byteCode = require('../bytecode'),
+  headOptions = require('./spec/head'),
   symbols = require('./spec/symbols'),
   dataObjs = {}; //The full objects that contains the data extracted from every file
 
@@ -49,7 +50,7 @@ function checkData(lines) {
   for (var i = 0; i < lines.length; i++) {
     line = lines[i].trim();
 
-    if(line.length > 0){
+    if (line.length > 0) {
       //Header checker
       switch (line[0]) {
         case '#':
@@ -86,20 +87,20 @@ function checkData(lines) {
   function checkLine(line) {
     var character, functDecl, functName;
 
-    for(var _i = 0; _i < line.length ; _i++){
-      switch(line[_i]){
+    for (var _i = 0; _i < line.length; _i++) {
+      switch (line[_i]) {
         case '-':
-          if(_i != 0 && symbolQueue.pop() !== '-'){
-            var e = new Error("Function: "+ line + " at line: " + (i + 1));
+          if (_i != 0 && symbolQueue.pop() !== '-') {
+            var e = new Error("Function: " + line + " at line: " + (i + 1));
             e.code = 400;
             throw e;
           }
           //TODO: Check fileObj for functs
           //TODO: Add some bytecode about the function
           symbolQueue.push(line[_i]);
-          if(line.charAt(line.length - 1) === '-'){
+          if (line.charAt(line.length - 1) === '-') {
             functDecl = line.substring()
-            //for(var _j = 0;){
+              //for(var _j = 0;){
 
             //}
           }
@@ -112,7 +113,7 @@ function checkData(lines) {
       }
     }
 
-    checkDebug("Line"+line);
+    checkDebug("Line" + line);
   }
 
   return fileObj;
