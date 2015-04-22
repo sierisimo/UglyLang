@@ -27,7 +27,7 @@
   }
 "
 
--fun1-
+-fun1:none- $$Simple function
 "
   {print('Just Sayin')}
   {return(5)}

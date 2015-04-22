@@ -1,3 +1,4 @@
 {
-  "types":["number","string"]
+  "types":["number","string"],
+  "special": ["none"]
 }

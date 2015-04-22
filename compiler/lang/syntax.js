@@ -42,6 +42,7 @@ function syntaxCheck(filesObj) {
 function checkData(lines) {
   var headCounter = 0,
     line, word, fileObj = {},
+    e,
     checkDebug = debugPackage('checkLine');
 
   var symbolQueue = [];
@@ -49,7 +50,7 @@ function checkData(lines) {
   for (var i = 0; i < lines.length; i++) {
     line = lines[i].trim();
 
-    if(line.length > 0){
+    if (line.length > 0) {
       //Header checker
       switch (line[0]) {
         case '#':
@@ -76,7 +77,7 @@ function checkData(lines) {
       //Get the value of the header
       fileObj[header] = value;
     } else {
-      var e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid");
+      e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid");
       //Throw error or something for invalid header.
       e.code = 100;
       throw e;
@@ -84,26 +85,42 @@ function checkData(lines) {
   }
 
   function checkLine(line) {
-    var character, functDecl, functName;
+    var functDecl, functName, subLine, endLine, tmpPosition;
 
-    for(var _i = 0; _i < line.length ; _i++){
-      switch(line[_i]){
+    for (var _i = 0; _i < line.length; _i++) {
+      switch (line[_i]) {
         case '-':
-          if(_i != 0 && symbolQueue.pop() !== '-'){
-            var e = new Error("Function: "+ line + " at line: " + (i + 1));
-            e.code = 400;
+          //TODO: Future implementation: automatic values for arguments, like python
+          if (_i != 0 && symbolQueue.length == 0) {
+            e = new Error("Syntax: " + line + " at line: " + (i + 1));
+            e.code = 200;
             throw e;
           }
+
+
+
           //TODO: Check fileObj for functs
           //TODO: Add some bytecode about the function
           symbolQueue.push(line[_i]);
-          if(line.charAt(line.length - 1) === '-'){
-            functDecl = line.substring()
-            //for(var _j = 0;){
 
-            //}
+          subLine = line.substring(_i + 1, line.length);
+
+          tmpPosition = subLine.indexOf("-");
+          if (tmpPosition <= 0) {
+            e = new Error("Function: " + line + " at line: " + (i + 1));
+            e.code = 401;
+            throw e;
           }
 
+          endLine = subLine.substring(tmpPosition, subLine.length);
+          subLine = subLine.substring(0, tmpPosition);
+          tmpPosition = subLine.indexOf(':');
+
+          checkDebug("EndLine: " + endLine);
+          checkDebug("SubLine: " + subLine);
+
+          functName = subLine.substring(0, tmpPosition);
+          // functArgs = subLine.substring(tmpPosition, subLine.length);
           break;
         case '{':
           //TODO: at the same time, add functions to the virtual machine
@@ -112,7 +129,7 @@ function checkData(lines) {
       }
     }
 
-    checkDebug("Line"+line);
+    checkDebug("Line" + line);
   }
 
   return fileObj;
