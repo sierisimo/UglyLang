@@ -16,7 +16,8 @@ const debugPackage = require('debug'),
   debug = debugPackage('lang-syntax');
 
 //Avalible headers on a Uglyfile.
-var headOptions = require('./spec/head'),
+var byteCode = require('../bytecode'),
+  headOptions = require('./spec/head'),
   symbols = require('./spec/symbols'),
   dataObjs = {}; //The full objects that contains the data extracted from every file
 
