@@ -13,6 +13,10 @@
  *
  */
 
+function add(type, name){
+
+}
+
 module.exports = {
-  
+  add: add
 }

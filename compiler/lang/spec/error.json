@@ -3,7 +3,8 @@
     "100": "Header is not valid, you must use one in header.json at the spec of the language"
   },
   "Syntax": {
-    "200": "Invalid symbol."
+    "200": "Invalid symbol.",
+    "201": "Missing symbol."
   },
   "Function": {
     "400": "Something is before the declaration of the function, functions always have to be start at own line with '-' (spaces doesn't count)",

@@ -86,7 +86,7 @@ function checkData(lines) {
   }
 
   function checkLine(line) {
-    var functDecl, functName, subLine, endLine, tmpPosition;
+    var functDecl, functName, functArgs, subLine, endLine, tmpPosition;
 
     for (var _i = 0; _i < line.length; _i++) {
       switch (line[_i]) {
@@ -98,34 +98,40 @@ function checkData(lines) {
             throw e;
           }
 
-
-
           //TODO: Check fileObj for functs
-          //TODO: Add some bytecode about the function
-          symbolQueue.push(line[_i]);
+          if (symbolQueue.length == 0) {
+            symbolQueue.push(line[_i]);
 
-          subLine = line.substring(_i + 1, line.length);
+            subLine = line.substring(_i + 1, line.length);
 
-          tmpPosition = subLine.indexOf("-");
-          if (tmpPosition <= 0) {
-            e = new Error("Function: " + line + " at line: " + (i + 1));
-            e.code = 401;
-            throw e;
+            tmpPosition = subLine.indexOf("-");
+            if (tmpPosition <= 0) {
+              e = new Error("Function: " + line + " at line: " + (i + 1));
+              e.code = 401;
+              throw e;
+            }
+
+            endLine = subLine.substring(tmpPosition, subLine.length);
+            subLine = subLine.substring(0, tmpPosition);
+            tmpPosition = subLine.indexOf(':');
+
+            //TODO: Add bytecode about this function...
+            functName = subLine.substring(0, tmpPosition);
+            //TODO: ...And his arguments
+            functArgs = subLine.substring(tmpPosition + 1, subLine.length);
+            
+          } else {
+            if (symbolQueue.pop() !== '-') {
+              e = new Error("Syntax: " + line + " at line:" + (i + 1));
+              e.code = 201;
+              throw e;
+            }
           }
 
-          endLine = subLine.substring(tmpPosition, subLine.length);
-          subLine = subLine.substring(0, tmpPosition);
-          tmpPosition = subLine.indexOf(':');
-
-          checkDebug("EndLine: " + endLine);
-          checkDebug("SubLine: " + subLine);
-
-          functName = subLine.substring(0, tmpPosition);
-          // functArgs = subLine.substring(tmpPosition, subLine.length);
           break;
         case '{':
           //TODO: at the same time, add functions to the virtual machine
-          symbolQueue.push(line[_i]);
+          //symbolQueue.push(line[_i]);
           break;
       }
     }
