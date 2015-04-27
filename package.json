@@ -24,7 +24,7 @@
     "ugly-launch": "node ./bin/uglyLauncher.js"
   },
   "dependencies": {
-    "commander": "2.x.x"
+    "commander": "^2.8.1"
   },
   "devDependencies": {
     "debug": "^2.1.1"

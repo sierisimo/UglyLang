@@ -1,13 +1,18 @@
 {
   "Header": {
-    "100": "Header is not valid, you must use one in header.json at the spec of the language"
+    "100": "Header is not valid, you must use one in header.json at the spec of the language.",
+    "101": "Headers cannot contain comments.",
+    "102": "Header functs has no values.",
+    "103": "Value for header 'functs' is empty or not valid. Example: #functs: a,,b."
   },
   "Syntax": {
     "200": "Invalid symbol.",
     "201": "Missing symbol."
   },
   "Function": {
-    "400": "Something is before the declaration of the function, functions always have to be start at own line with '-' (spaces doesn't count)",
-    "401": "Function doen't have a name or the name isn't after the '-''"
+    "400": "Something is before the declaration of the function, functions always have to start at own line with '-' (spaces doesn't count)",
+    "401": "Symbol '-' not found at same line as function declaration.",
+    "402": "Anonymous functions are not part of the language.",
+    "403": "Function not declared at Header 'functs'."
   }
 }

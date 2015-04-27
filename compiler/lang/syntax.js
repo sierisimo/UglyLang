@@ -29,23 +29,24 @@ function syntaxCheck(filesObj) {
 
   //TODO: Optimize this
   for (var i = filesNames.length, l = i; l--;) {
-    debug("Check Syntax on:", filesNames);
+    debug("Check Syntax on:", filesNames[l]);
     fileContent = allContent[filesNames[l]];
 
     textLines = fileContent.split('\n');
 
-    dataObjs[filesNames[l]] = checkData(textLines);
+    dataObjs[filesNames[l]] = checkData(filesNames[l], textLines);
   }
 
   debug(dataObjs);
 }
 
-function checkData(lines) {
+function checkData(fileName, lines) {
   var headCounter = 0,
     line, word, fileObj = {},
     e,
     checkDebug = debugPackage('checkLine');
 
+  //Holder/Helper to determine when the syntax is wrong.
   var symbolQueue = [];
 
   for (var i = 0; i < lines.length; i++) {
@@ -55,6 +56,7 @@ function checkData(lines) {
       //Header checker
       switch (line[0]) {
         case '#':
+          //FIXME: The header can be anywhere... and that's a big issue
           headerCheck(
             line.substring(1, line.indexOf(":")).trim(),
             line.substring(line.indexOf(":") + 1).trim()
@@ -64,7 +66,8 @@ function checkData(lines) {
           //Just a comment... keep checking...
           if (line[1] === '$') {
             continue;
-          } else { //TODO: Anotations (Future implementtions)
+          } else {
+            //TODO: Anotations (Future implementtions)
           }
         default:
           checkLine(line);
@@ -72,13 +75,39 @@ function checkData(lines) {
     }
   }
 
+  //XXX: Make a better check of headers, maybe use a regexp for values
   function headerCheck(header, value) {
     if (header in headOptions) {
       headCounter++;
       //Get the value of the header
+      if (value.indexOf("$$") !== -1) {
+        e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid at File: " + fileName);
+        e.code = 101;
+        throw e;
+      }
+
+      if (header === 'functs') {
+        value = value.split(",");
+
+        if(value.length < 1){
+          e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid at File: " + fileName);
+          e.code = 102;
+          throw e;
+        }
+        for (var _f = 0; _f < value.length; _f++) {
+          value[_f] = value[_f].trim();
+
+          if(value[_f].length < 1){
+            e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid at File: " + fileName);
+            e.code = 103;
+            throw e;
+          }
+        }
+      }
+
       fileObj[header] = value;
     } else {
-      e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid");
+      e = new Error("Header: " + header + " at line: " + (i + 1) + " not valid at File: " + fileName);
       //Throw error or something for invalid header.
       e.code = 100;
       throw e;
@@ -93,12 +122,11 @@ function checkData(lines) {
         case '-':
           //TODO: Future implementation: automatic values for arguments, like python
           if (_i != 0 && symbolQueue.length == 0) {
-            e = new Error("Syntax: " + line + " at line: " + (i + 1));
+            e = new Error("Syntax: " + line + " at line: " + (i + 1) + " at File: " + fileName);
             e.code = 200;
             throw e;
           }
 
-          //TODO: Check fileObj for functs
           if (symbolQueue.length == 0) {
             symbolQueue.push(line[_i]);
 
@@ -106,7 +134,7 @@ function checkData(lines) {
 
             tmpPosition = subLine.indexOf("-");
             if (tmpPosition <= 0) {
-              e = new Error("Function: " + line + " at line: " + (i + 1));
+              e = new Error("Function: " + line + " at line: " + (i + 1) + " at File: " + fileName);
               e.code = 401;
               throw e;
             }
@@ -117,12 +145,35 @@ function checkData(lines) {
 
             //TODO: Add bytecode about this function...
             functName = subLine.substring(0, tmpPosition);
+            if(functName.length < 1){
+              e = new Error("Function: " + line + " at line: " + (i + 1) + " at File: " + fileName);
+              e.code = 402;
+              throw e;
+            }
+
+            var funcFlag = false;
+            for(var _f = 0; _f < fileObj.functs.length ; _f++){
+              if(functName === fileObj.functs[_f]){
+                funcFlag = true;
+                break;
+              }
+            }
+
+            if(!funcFlag){
+              e = new Error("Function: " + line + " at line: " + (i + 1) + " at File: " + fileName);
+              e.code = 403;
+              throw e;
+            }
+
             //TODO: ...And his arguments
             functArgs = subLine.substring(tmpPosition + 1, subLine.length);
-            
+
+            checkDebug("FunctName: ", functName);
+            checkDebug("FunctArgs: ", functArgs);
+
           } else {
             if (symbolQueue.pop() !== '-') {
-              e = new Error("Syntax: " + line + " at line:" + (i + 1));
+              e = new Error("Syntax: " + line + " at line:" + (i + 1) + " at File: " + fileName);
               e.code = 201;
               throw e;
             }
